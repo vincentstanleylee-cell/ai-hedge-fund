@@ -246,6 +246,13 @@ def make_llm(
             f"Supported: {', '.join(sorted(SUPPORTED_PROVIDERS))}."
         )
 
+    if provider == "Claude Code":
+        # No key: the local `claude` command runs the prompt on the user's own
+        # Claude subscription. The CLI starts slower than an API call and can
+        # think for a while, so never go below its own comfortable timeout.
+        from hedge_fund.llm.claude_code import ClaudeCodeLLM
+        return ClaudeCodeLLM(model, timeout=max(timeout, 300.0), on_token=on_token)
+
     api_key = _require_key(provider)
 
     if provider == "TypeSafe":

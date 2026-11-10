@@ -9,6 +9,7 @@ call the API.
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime, timedelta, timezone
 from email.utils import format_datetime
 from unittest.mock import Mock
@@ -53,6 +54,9 @@ def keyed(monkeypatch):
         monkeypatch.setenv(env_var, "test-key-not-real")
     monkeypatch.delenv("HEDGE_FUND_LLM_MODEL", raising=False)
     monkeypatch.delenv("OPENAI_API_BASE", raising=False)
+    # Claude Code needs the `claude` command rather than a key; any existing file
+    # stands in for it, since constructing a client never runs it.
+    monkeypatch.setenv("CLAUDE_CODE_BIN", sys.executable)
 
 
 @pytest.mark.parametrize("provider", sorted(SUPPORTED_PROVIDERS))

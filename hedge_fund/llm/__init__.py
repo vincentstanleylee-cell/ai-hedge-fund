@@ -12,6 +12,7 @@ from hedge_fund.llm.client import (
     extract_json,
     make_llm,
 )
+from hedge_fund.llm.claude_code import ClaudeCodeLLM
 from hedge_fund.llm.registry import (
     PROVIDER_ENV_VARS,
     SUPPORTED_PROVIDERS,
@@ -25,6 +26,7 @@ from hedge_fund.llm.watch import ThesisStream
 __all__ = [
     "AnthropicLLM",
     "ChatLLM",
+    "ClaudeCodeLLM",
     "DEFAULT_MODEL",
     "JevLLM",
     "LLMCallError",

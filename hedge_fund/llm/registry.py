@@ -27,10 +27,20 @@ PROVIDER_ENV_VARS = {
     "TypeSafe": "TYPESAFE_API_KEY",
 }
 
+# Providers that need no key because the user's own login does the work: Claude
+# Code runs prompts through the locally installed `claude` command, on the user's
+# Claude subscription (see claude_code.py). They have no env var, so the picker
+# reports "no key is needed".
+KEYLESS_PROVIDERS = frozenset({"Claude Code"})
+
+# Model ids with this prefix are served by Claude Code, whether or not they are
+# listed in api_models.json (`claude-code/opus` works the same as a listed id).
+CLAUDE_CODE_PREFIX = "claude-code/"
+
 # Providers v2 has a client for (see client.py:make_llm). Anything in the
 # registry but missing here is shown in the picker and not selectable — better
 # a greyed row than a run that dies on an id the transport rejects.
-SUPPORTED_PROVIDERS = frozenset(PROVIDER_ENV_VARS)
+SUPPORTED_PROVIDERS = frozenset(PROVIDER_ENV_VARS) | KEYLESS_PROVIDERS
 
 _FALLBACK = ("Opus 5.5", "claude-opus-5-5", "Anthropic")
 
@@ -53,6 +63,8 @@ def load_api_models() -> list[tuple[str, str, str]]:
 def provider_for(model_id: str) -> str | None:
     """Which provider serves a model id. None if it is not in the registry —
     a hand-exported HEDGE_FUND_LLM_MODEL should not be second-guessed."""
+    if model_id.startswith(CLAUDE_CODE_PREFIX):
+        return "Claude Code"
     return next((prov for _, mid, prov in load_api_models() if mid == model_id),
                 None)
 

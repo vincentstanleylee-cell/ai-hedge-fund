@@ -44,6 +44,18 @@ The app asks for keys the first time it needs them and saves them to `~/.hedge-f
 
 Keys exported in your shell always win over the saved file.
 
+### Use your Claude subscription instead of a model API key
+
+If you have a Claude Pro/Max plan and [Claude Code](https://claude.com/claude-code) installed and signed in (run `claude` once), no model key is needed: pick one of the **Claude Code · …** models in the picker, or run
+
+```bash
+aihf --model claude-code/claude-sonnet-5-5
+```
+
+Each agent call runs the local `claude` command in a stripped-down mode (`--safe-mode`, no tools, nothing saved), so usage counts against your plan like any other Claude Code use. This project never reads or stores your Claude login; it only starts the `claude` program. Any `ANTHROPIC_API_KEY` in your environment is hidden from that program so it cannot bill the API instead.
+
+Notes: a plan has usage limits, and every agent × ticker × session is one call, so a big backtest can use a lot of it. `HEDGE_FUND_CLAUDE_CONCURRENCY` (default 3) caps parallel calls, and a cheaper model (Sonnet or Haiku) stretches the plan furthest. Run `python -m hedge_fund.llm.claude_code` to check the setup with one tiny call. You still need a market-data key (above).
+
 ## How to Run
 
 ### Interactive app

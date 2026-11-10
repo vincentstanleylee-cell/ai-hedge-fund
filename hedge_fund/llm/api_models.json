@@ -1,5 +1,25 @@
 [
   {
+    "display_name": "Claude Code · Sonnet 5.5 (your subscription)",
+    "model_name": "claude-code/claude-sonnet-5-5",
+    "provider": "Claude Code"
+  },
+  {
+    "display_name": "Claude Code · Opus 5.5 (your subscription)",
+    "model_name": "claude-code/claude-opus-5-5",
+    "provider": "Claude Code"
+  },
+  {
+    "display_name": "Claude Code · Fable 5.2 (your subscription)",
+    "model_name": "claude-code/claude-fable-5-2",
+    "provider": "Claude Code"
+  },
+  {
+    "display_name": "Claude Code · Haiku 5.5 (your subscription)",
+    "model_name": "claude-code/claude-haiku-5-5",
+    "provider": "Claude Code"
+  },
+  {
     "display_name": "Opus 5.5",
     "model_name": "claude-opus-5-5",
     "provider": "Anthropic"
